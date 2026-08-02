@@ -11,6 +11,7 @@ const unblockedMap = new MapCell({});
 
 function lookForMatch(messageId) {
   const node = document.querySelector('[data-list-id="chat-messages"]');
+  if (!node) return null;
   const component = getInternalInstance(node)?.memoizedProps?.children?.[1]?.find(m => m.key === messageId);
   if (component) {
     const message = component.props?.message;
