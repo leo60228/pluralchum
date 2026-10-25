@@ -64,8 +64,6 @@
     "contrastThreshold": {
       "displayName": "Contrast ratio threshold",
       "type": "number",
-      "min": 1,
-      "max": 21,
       "default": 3
     },
     "clearCache": {
