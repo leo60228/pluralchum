@@ -4,6 +4,7 @@ import { ColourPreference } from './data';
 import HeaderPKBadge from './HeaderPKBadge';
 import React from '@moonlight-mod/wp/react';
 import { GuildMemberStore } from '@moonlight-mod/wp/common_stores';
+import MessageClasses from '@moonlight-mod/wp/discord/modules/messages/web/Message.css';
 
 function normalize(str) {
   return fix(str).normalize('NFD');
@@ -30,7 +31,7 @@ function getUsername(useServerNames, author, profile) {
 
 function NameSegment({ colour, name }) {
   return (
-    <span className='username_c19a55 pk-name-segment' style={{ color: colour }}>
+    <span className={`${MessageClasses.username} pk-name-segment`} style={{ color: colour }}>
       {name}
     </span>
   );
@@ -81,7 +82,7 @@ function createHeaderChildren(message, guildId, profile, userHash, onClickUserna
   const doSysTag = memberTag && memberTag.length > 0;
 
   return [
-    <span className='username_c19a55 pk-name' onClick={onClickUsername} key='PKName'>
+    <span className={`${MessageClasses.username} pk-name`} onClick={onClickUsername} key='PKName'>
       <NameSegment colour={memberColour} name={username} key='NameSegment' />
       {doSysTag ? separator : null}
       {doSysTag ? <NameSegment colour={tagColour} name={memberTag} /> : null}

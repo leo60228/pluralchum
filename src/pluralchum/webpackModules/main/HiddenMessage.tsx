@@ -1,6 +1,21 @@
 import React from '@moonlight-mod/wp/react';
 import Blocked from './blocked.svg';
 import Ignored from './ignored.svg';
+import HelpMessageClasses from '@moonlight-mod/wp/discord/components/common/HelpMessage.css';
+import spacepack from '@moonlight-mod/wp/spacepack_spacepack';
+import MessageClasses from '@moonlight-mod/wp/discord/modules/messages/web/Message.css';
+
+const findClasses = pattern =>
+  Object.fromEntries(
+    Object.values(spacepack.findByCode(`:"${pattern}_`)[0].exports).map(
+      x => typeof x === 'string' && [x.split('_')[0], x],
+    ),
+  );
+
+const blockedMessageClasses = findClasses('blockedMessageText');
+const messageGroupClasses = findClasses('groupStart');
+const iconClasses = findClasses('actionAnchor');
+const messageListClasses = findClasses('messageListItem');
 
 export const Reason = {
   Blocked: 'BLOCKED',
@@ -34,11 +49,11 @@ function getUnblocked(unblockedMap, message, messageNode, groupId) {
 
 function HiddenIcon({ reason }) {
   return (
-    <div className='iconContainer__235ca'>
+    <div className={(HelpMessageClasses as any).iconContainer}>
       {reason === Reason.Blocked ? (
-        <Blocked aria-hidden='true' role='img' className='blockedIcon__7a70a' />
+        <Blocked aria-hidden='true' role='img' className={blockedMessageClasses.blockedIcon} />
       ) : reason === Reason.Ignored ? (
-        <Ignored aria-hidden='true' role='img' className='blockedIcon__7a70a' />
+        <Ignored aria-hidden='true' role='img' className={blockedMessageClasses.blockedIcon} />
       ) : null}
     </div>
   );
@@ -53,17 +68,20 @@ export function HiddenMessage({ unblockedMap, message, messageNode, groupId, rea
   }
 
   return (
-    <div className={`groupStart__5126c${expanded ? ' expanded__7a70a' : ''}`}>
-      <div className='wrapper_c19a55 cozy_c19a55 zalgo_c19a55' role='article'>
-        <div className='contents_c19a55'>
-          <div className='blockedSystemMessage__7a70a container__235ca cozy__235ca'>
+    <div className={`${messageGroupClasses.groupStart} ${expanded ? blockedMessageClasses.expandedClass : ''}`}>
+      <div
+        className={`${messageGroupClasses.wrapper} ${messageGroupClasses.cozy} ${messageGroupClasses.zalgo}`}
+        role='article'
+      >
+        <div className={MessageClasses.contents}>
+          <div className={`${blockedMessageClasses.blockedSystemMessage} ${iconClasses.container} ${iconClasses.cozy}`}>
             <HiddenIcon reason={reason} />
-            <div className='content__235ca'>
-              <div className='blockedMessageText__7a70a'>
+            <div className={iconClasses.content}>
+              <div className={blockedMessageClasses.blockedMessageText}>
                 {unblocked.length} {reason === Reason.Blocked ? 'blocked' : 'ignored'}{' '}
                 {unblocked.length === 1 ? 'message' : 'messages'} —{' '}
                 <span
-                  className='blockedAction__7a70a'
+                  className={blockedMessageClasses.blockedIcon}
                   role='button'
                   tabIndex={0}
                   onClick={() => setExpanded(!expanded)}
@@ -78,7 +96,7 @@ export function HiddenMessage({ unblockedMap, message, messageNode, groupId, rea
       {expanded ? (
         <li
           id={`chat-messages-${message.channel_id}-${message.id}`}
-          className='messageListItem__5126c'
+          className={messageListClasses.messageListItem}
           aria-setsize={-1}
         >
           {unblocked}

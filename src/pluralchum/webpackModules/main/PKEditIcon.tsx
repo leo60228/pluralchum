@@ -1,10 +1,11 @@
 import PKPencil from './pkPencil.svg';
 import React from '@moonlight-mod/wp/react';
+import HelpMessageClasses from '@moonlight-mod/wp/discord/components/common/HelpMessage.css';
 
 export default function PKEditIcon() {
   return (
-    <div className='iconContainer_c1e9c4'>
-      <PKPencil className='icon_c1e9c4'></PKPencil>
+    <div className={(HelpMessageClasses as any).iconContainer}>
+      <PKPencil className={HelpMessageClasses.icon}></PKPencil>
     </div>
   );
 }
